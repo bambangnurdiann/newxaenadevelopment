@@ -25,7 +25,8 @@ export default function LoginPage() {
 
       if (result.success) {
         const sessionToken = result.sessionToken
-        document.cookie = session_token=${sessionToken}; path=/;
+        // Perbaikan pada bagian ini
+        document.cookie = `session_token=${sessionToken}; path=/;`
 
         const userResponse = await fetch('/api/checkLoggedInUsers')
         if (userResponse.ok) {
@@ -35,14 +36,10 @@ export default function LoginPage() {
           toast({
             title: "Login Successful",
             description: "You have been successfully logged in.",
-            variant: "default", // Changed from "success" to "default"
+            variant: "default",
           })
 
-          if (userData.loggedInUsers[0] === '96312') {
-            router.push('/admin/upload-tickets')
-          } else {
-            router.push('/dashboard')
-          }
+          router.push('/dashboard')
         } else {
           throw new Error('Failed to fetch user data')
         }
